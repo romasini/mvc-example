@@ -1,10 +1,8 @@
 package ru.romasini.structure.pattern.mvc.controllers;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import ru.romasini.structure.pattern.mvc.dto.ProductDto;
 import ru.romasini.structure.pattern.mvc.entities.Product;
 import ru.romasini.structure.pattern.mvc.services.ProductService;
 
@@ -18,13 +16,18 @@ public class ProductController {
     private final ProductService productService;
 
     @GetMapping
-    public List<Product> getProductList(){
+    public List<ProductDto> getProductList(){
         return productService.findAll();
     }
 
     @GetMapping(value = "/{id}", produces = "application/json")
-    public Product getProductById(@PathVariable Long id) {
+    public ProductDto getProductById(@PathVariable Long id) {
         return productService.findById(id).orElseThrow(() -> new RuntimeException("Unable to find product with id: " + id));
+    }
+
+    @PostMapping
+    public ProductDto saveProduct(@RequestBody Product p){
+        return new ProductDto(productService.save(p));
     }
 
 }
