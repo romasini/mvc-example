@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+    <title th:text="'Студент ' + ${student.name}"/>
+</head>
+<body>
+    <div class="container">
+        <div th:replace="~{navigation :: navigation(Students)}" />
+
+        <form method="POST" class="editStudent" th:action="@{/save_student}" th:object="${student}">
+            <div class="form-group">
+                <label for="studentId">ID</label>
+                <input type="text" class="form-control" id="studentId" th:field="*{id}" name="id">
+            </div>
+            <div class="form-group">
+                <label for="studentName">Имя</label>
+                <input type="text" class="form-control" id="studentName" th:field="*{name}" name="name">
+            </div>
+            <div class="form-group">
+                <label for="studentAge">Возраст</label>
+                <input type="number" class="form-control" id="studentAge" th:field="*{age}" name="age">
+            </div>
+            <button type="submit" class="btn btn-primary">Сохранить</button>
+        </form>
+
+    </div>
+</body>
+</html>
